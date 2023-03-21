@@ -1,28 +1,28 @@
 package se.nt1dc.deliveryservice.service
 
 import org.springframework.stereotype.Service
-import se.nt1dc.deliveryservice.dto.ItemShippingRequest
+import se.nt1dc.deliveryservice.dto.ItemShippingDto
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 @Service
 class ShippingCalculationService {
-    fun calculateItemListShippingSum(items: List<ItemShippingRequest>): Double {
+    fun calculateItemListShippingSum(items: List<ItemShippingDto>): Double {
         return items.stream().mapToDouble { calculateItemShipping(it) }.sum()
     }
 
-    fun calculateItemShipping(itemShippingRequest: ItemShippingRequest): Double {
+    fun calculateItemShipping(itemShippingDto: ItemShippingDto): Double {
         val distance = calculateDistance(
-            itemShippingRequest.from.latitude,
-            itemShippingRequest.from.longitude,
-            itemShippingRequest.to.latitude,
-            itemShippingRequest.to.longitude
+            itemShippingDto.from.latitude,
+            itemShippingDto.from.longitude,
+            itemShippingDto.to.latitude,
+            itemShippingDto.to.longitude
         )
 
-        return distance * itemShippingRequest.weight * 0.322
+        return distance * itemShippingDto.weight * 0.322
     }
 
-    fun calculateDistance(x1: Long, y1: Long, x2: Long, y2: Long): Double {
+    fun calculateDistance(x1: Double, y1: Double, x2: Double, y2: Double): Double {
         return sqrt(
             (x1 - x2).toDouble().pow(2) + (y1 - y2).toDouble().pow(2)
         )
