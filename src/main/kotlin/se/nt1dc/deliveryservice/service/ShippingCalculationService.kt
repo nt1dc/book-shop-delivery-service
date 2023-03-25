@@ -19,7 +19,7 @@ class ShippingCalculationService {
             itemShippingDto.to.longitude
         )
 
-        return distance * itemShippingDto.weight * 0.322
+        return Math.round((distance * itemShippingDto.weight * 0.322) * 100.0) / 100.0
     }
 
     fun calculateDistance(x1: Double, y1: Double, x2: Double, y2: Double): Double {
